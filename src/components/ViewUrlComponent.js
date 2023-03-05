@@ -1,39 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import axios from "axios"
+import { axiosIntance } from "../config";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const ViewUrlComponent= () => {
+const ViewUrlComponent= ({ userId }) => {
     const [urls, setUrls] = useState([]);
 
     useEffect(() => {
       const fetchUrlAndSetUrl = async () => {
-        const result = await axios.get("http://localhost:3001/all");
+        const result = await axiosIntance.get(`/${userId}/all`);
         setUrls(result.data);
       };
       fetchUrlAndSetUrl();
-    }, [urls]);
+    }, [userId]);
 
   return (
     <div>
-      <table className="table">
-        <thead className="table-dark">
-          <tr>
-            <th>Original Url</th>
-            <th>Short Url</th>
-            <th>Click Count</th>
-          </tr>
-        </thead>
-        <tbody>
-          {urls.map((url, idx) => (
-            <tr key={idx}>
-              <td>{url.origUrl}</td>
-              <td>
-                <a href={`${url.shortUrl}`}>{url.shortUrl}</a>
-              </td>
-              <td>{url.clicks}</td>
-            </tr>
+          {urls.map((url, index) => (
+            <div className="card" style={{width: "40rem"}} key={index}>
+              <div className="card-body">
+                <a href={`${url.shortUrl}`} className="card-link">{url.shortUrl}</a>
+                <p className="card-text">Original Url: {url.origUrl}</p>
+              </div>
+            </div>
           ))}
-        </tbody>
-      </table>
     </div>
   );
 }
