@@ -18,7 +18,7 @@ const ViewUrlComponent= ({ userId }) => {
           {urls.map((url, index) => (
             <div className="card" style={{width: "40rem"}} key={index}>
               <div className="card-body">
-                <a href={`${url.shortUrl}`} className="card-link">{url.shortUrl}</a>
+                <a href={`${url.shortUrl}`} className="card-link" rel="noopener noreferrer" target="_blank">{url.shortUrl}</a>
                 <p className="card-text">Original Url: {url.origUrl}</p>
               </div>
             </div>
